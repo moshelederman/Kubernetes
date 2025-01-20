@@ -1,0 +1,31 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+   
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'latest'
+
+    - name: Apply Kubernetes manifests
+      env:
+        KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
+      run: |
+        kubectl apply -f configmap.yaml
+        kubectl apply -f mysql.yaml
+        kubectl apply -f app.yaml
