@@ -25,17 +25,19 @@ jobs:
     - name: Configure Kubeconfig
       run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
 
-    - name: verify sshpass and ssh installed
-        run: |
-          ssh -V || { echo "ssh is not installed"; exit 1; }
-          sshpass -V || { echo "sshpass is not installed"; exit 1; }
+    
 
-      - name: SCP yaml to remote machine using sshpass
-        env:
+    - name: Verify SSH and SSHPASS
+      run: |
+          ssh -V || { echo "Error: ssh is not installed"; exit 1; }
+          sshpass -V || { echo "Error: sshpass is not installed"; exit 1; }
+
+    - name: SCP yaml to remote machine using sshpass
+      env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SSH_USER: ${{ secrets.SSH_USER }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-        run: | 
+      run: | 
           set -ex
           sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./ci-cd.yaml 
 
