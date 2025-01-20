@@ -21,6 +21,10 @@ jobs:
       uses: azure/setup-kubectl@v1
       with:
         version: 'latest'
+        
+    - name: Configure Kubeconfig
+      run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+    
 
     - name: Apply Kubernetes manifests
       env:
