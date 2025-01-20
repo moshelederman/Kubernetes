@@ -1,0 +1,38 @@
+# app.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: project-stars
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-stars
+  template:
+    metadata:
+      labels:
+        app: project-stars
+    spec:
+      containers:
+      - name: project-stars
+        image: moshelederman/project-stars
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: app-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: project-stars
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
