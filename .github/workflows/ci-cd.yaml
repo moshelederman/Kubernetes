@@ -39,7 +39,8 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
       run: | 
           set -ex
-          sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./ci-cd.yaml 
+          sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./ci-cd.yaml $SSH_USER@$REMOTE_HOST:/home/$SSH_USER
+
 
       
     - name: Apply Kubernetes manifests
