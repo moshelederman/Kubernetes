@@ -16,6 +16,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'latest'
    
     - name: Configure Kubeconfig
       run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
