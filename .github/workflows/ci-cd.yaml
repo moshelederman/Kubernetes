@@ -40,12 +40,17 @@ jobs:
           pwd
           ls -la
           sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./app.yaml ./mysql.yaml ./secret.yaml ./configmap.yaml $SSH_USER@$REMOTE_HOST:/home/$SSH_USER
-
       
     - name: Apply Kubernetes manifests
       env:
-        KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
       run: |
-        kubectl apply -f configmap.yaml
-        kubectl apply -f mysql.yaml
-        kubectl apply -f app.yaml
+          set -ex
+          pwd
+          ls -la
+          sshpass -p $SSH_PASSWORD ssh -v -o StrictHostKeyChecking=no $SSH_USER@$REMOTE_HOST 
+          kubectl apply -f configmap.yaml
+          kubectl apply -f mysql.yaml
+          kubectl apply -f app.yaml
