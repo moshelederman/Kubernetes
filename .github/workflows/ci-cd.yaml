@@ -50,7 +50,7 @@ jobs:
           set -ex
           pwd
           ls -la
-          sshpass -p $SSH_PASSWORD ssh -v -o StrictHostKeyChecking=no $SSH_USER@$REMOTE_HOST:/home/$SSH_USER 
+          sshpass -p $SSH_PASSWORD ssh -v -o StrictHostKeyChecking=no $SSH_USER@$REMOTE_HOST 
           kubectl apply -f configmap.yaml --validate=false
           kubectl apply -f mysql.yaml --validate=false
           kubectl apply -f app.yaml --validate=false
