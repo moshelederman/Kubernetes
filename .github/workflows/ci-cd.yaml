@@ -51,6 +51,7 @@ jobs:
           pwd
           ls -la
           sshpass -p $SSH_PASSWORD ssh -v -o StrictHostKeyChecking=no $SSH_USER@$REMOTE_HOST 
-          kubectl apply -f configmap.yaml
-          kubectl apply -f mysql.yaml
-          kubectl apply -f app.yaml
+          kubectl apply -f configmap.yaml --validate=false
+          kubectl apply -f mysql.yaml --validate=false
+          kubectl apply -f app.yaml --validate=false
+
