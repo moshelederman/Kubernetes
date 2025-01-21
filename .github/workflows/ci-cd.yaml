@@ -16,12 +16,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v1
-      with:
-        version: 'latest'
-        
+   
     - name: Configure Kubeconfig
       run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
 
@@ -50,7 +45,7 @@ jobs:
           set -ex
           pwd
           ls -la
-          sshpass -p $SSH_PASSWORD ssh -v -o StrictHostKeyChecking=no $SSH_USER@$REMOTE_HOST 
+          sshpass -p $SSH_PASSWORD ssh -v -o StrictHostKeyChecking=no $SSH_USER@$REMOTE_HOST:/home/$SSH_USER 
           kubectl apply -f configmap.yaml --validate=false
           kubectl apply -f mysql.yaml --validate=false
           kubectl apply -f app.yaml --validate=false
