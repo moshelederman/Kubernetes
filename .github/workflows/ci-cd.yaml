@@ -25,7 +25,6 @@ jobs:
     - name: Configure Kubeconfig
       run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
 
-    
     - name: Verify SSH and SSHPASS
       run: |
           ssh -V || { echo "Error: ssh is not installed"; exit 1; }
