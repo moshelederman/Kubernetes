@@ -39,7 +39,7 @@ jobs:
           set -ex
           pwd
           ls -la
-          sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./app.yaml ./mysql.yaml ./secret.yaml ./configmao.yaml $SSH_USER@$REMOTE_HOST:/home/$SSH_USER
+          sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./app.yaml ./mysql.yaml ./secret.yaml ./configmap.yaml $SSH_USER@$REMOTE_HOST:/home/$SSH_USER
 
       
     - name: Apply Kubernetes manifests
