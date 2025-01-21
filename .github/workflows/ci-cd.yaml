@@ -26,7 +26,6 @@ jobs:
       run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
 
     
-
     - name: Verify SSH and SSHPASS
       run: |
           ssh -V || { echo "Error: ssh is not installed"; exit 1; }
@@ -39,8 +38,9 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
       run: | 
           set -ex
-          sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./ci-cd.yaml $SSH_USER@$REMOTE_HOST:/home/$SSH_USER
-
+          pwd
+          ls -la
+          sshpass -p $SSH_PASSWORD scp -v -o StrictHostKeyChecking=no ./app.yaml ./mysql.yaml ./secret.yaml ./configmao.yaml $SSH_USER@$REMOTE_HOST:/home/$SSH_USER
 
       
     - name: Apply Kubernetes manifests
