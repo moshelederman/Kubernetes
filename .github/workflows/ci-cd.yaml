@@ -78,19 +78,20 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Configure Kubeconfig
-        run: |
-          mv kubeconfig kubeconfig.yaml
-          export KUBECONFIG=kubeconfig.yaml
-
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set AKS context
+      - name: Get kubeconfig from Terraform output
         run: |
-          az aks get-credentials --resource-group <Resource-Group-Name> --name <AKS-Cluster-Name>
+          terraform output -raw kube_config > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml          
+
+      - name: Get AKS credentials
+        run: |
+          az aks get-credentials --resource-group aks-resource-group --name aks-cluster
+          export KUBECONFIG=~/.kube/config
 
       - name: Copy Files to AKS
         run: |
