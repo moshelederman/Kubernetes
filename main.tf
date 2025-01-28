@@ -4,8 +4,6 @@ terraform {
     key            = "aks/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
-    access_key     = var.aws_access_key
-    secret_key     = var.aws_secret_key
   }
 }
 
