@@ -1,3 +1,25 @@
+provider "azurerm" {
+  features {}
+}
+variable "client_id" {
+  description = "Azure Client ID"
+  sensitive   = true
+}
+
+variable "client_secret" {
+  description = "Azure Client Secret"
+  sensitive   = true
+}
+
+variable "tenant_id" {
+  description = "Azure Tenant ID"
+  sensitive   = true
+}
+
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  sensitive   = true
+}
 terraform {
   backend "s3" {
     bucket         = "moshe-terrarorm"
@@ -5,10 +27,6 @@ terraform {
     region         = "us-east-1"
     encrypt        = true
   }
-}
-
-provider "azurerm" {
-  features {}
 }
 
 resource "azurerm_resource_group" "aks_rg" {
@@ -43,23 +61,4 @@ output "kube_config" {
 resource "local_file" "kubeconfig" {
   filename = "${path.module}/kubeconfig.yaml"
   content  = azurerm_kubernetes_cluster.aks.kube_admin_config_raw
-}
-variable "client_id" {
-  description = "Azure Client ID"
-  sensitive   = true
-}
-
-variable "client_secret" {
-  description = "Azure Client Secret"
-  sensitive   = true
-}
-
-variable "tenant_id" {
-  description = "Azure Tenant ID"
-  sensitive   = true
-}
-
-variable "subscription_id" {
-  description = "Azure Subscription ID"
-  sensitive   = true
 }
