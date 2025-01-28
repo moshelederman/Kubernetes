@@ -54,11 +54,13 @@ jobs:
           TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         run: terraform apply -auto-approve tfplan
 
-      - name: Upload Kubeconfig Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: kubeconfig
-          path: kubeconfig.yaml 
+      - name: Show Terraform Outputs
+        run: terraform output
+
+      - name: Get kubeconfig from Terraform output
+        run: |
+          terraform output -raw kube_config > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
 
   deploy:
     runs-on: ubuntu-latest
