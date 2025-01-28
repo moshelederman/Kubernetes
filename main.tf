@@ -36,30 +36,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     Environment = "Production"
   }
 }
-
-resource "null_resource" "copy_files" {
-  provisioner "local-exec" {
-    command = <<EOT
-      sshpass -p "${var.ssh_password}" scp -o StrictHostKeyChecking=no \
-        ./app.yaml ./mysql.yaml ./secret.yaml ./configmap.yaml \
-        ${var.ssh_user}@${var.remote_host}:/home/${var.ssh_user}/
-    EOT
-  }
-}
-
-variable "ssh_user" {
-  description = "Username for SSH"
-}
-
-variable "ssh_password" {
-  description = "Password for SSH"
-  sensitive   = true
-}
-
-variable "remote_host" {
-  description = "Remote machine hostname or IP"
-}
-
 output "kube_config" {
   value     = azurerm_kubernetes_cluster.aks.kube_admin_config_raw
   sensitive = true
