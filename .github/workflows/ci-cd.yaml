@@ -53,6 +53,13 @@ jobs:
           TF_VAR_tenant_id: ${{ secrets.ARM_TENANT_ID }}
           TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         run: terraform apply -auto-approve tfplan
+
+      - name: Upload Kubeconfig Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: kubeconfig
+          path: kubeconfig.yaml 
+
   deploy:
     runs-on: ubuntu-latest
     needs: terraform
@@ -73,8 +80,23 @@ jobs:
 
       - name: Configure Kubeconfig
         run: |
-          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+          mv kubeconfig kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS context
+        run: |
+          az aks get-credentials --resource-group <Resource-Group-Name> --name <AKS-Cluster-Name>
+
+      - name: Copy Files to AKS
+        run: |
+          kubectl cp <local-path> <namespace>/<pod-name>:<container-path>
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}          
 
       - name: Apply Kubernetes manifests
         run: |
