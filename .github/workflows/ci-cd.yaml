@@ -106,11 +106,11 @@ jobs:
       #     az aks get-credentials --resource-group aks-resource-group --name aks-cluster
       #     export KUBECONFIG=~/.kube/config
 
-      - name: Copy Files to AKS
-        run: |
-          kubectl cp <local-path> <namespace>/<pod-name>:<container-path>
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}          
+      # - name: Copy Files to AKS
+      #   run: |
+      #     kubectl cp <local-path> <namespace>/<pod-name>:<container-path>
+      #   env:
+      #     KUBECONFIG: ${{ secrets.KUBECONFIG }}          
 
       - name: Apply Kubernetes manifests
         run: |
