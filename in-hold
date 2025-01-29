@@ -20,4 +20,3 @@ variable "ssh_password" {
 variable "remote_host" {
   description = "Remote machine hostname or IP"
 }
-#some change to push
