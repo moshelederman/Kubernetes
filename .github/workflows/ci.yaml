@@ -47,12 +47,6 @@ jobs:
 
       - name: Navigate, stop existing containers, and start new ones
         run: |
-          sudo apt-get install -y git
-          git clone https://github.com/moshelederman/DevOps-Project.git
-          ls -la
-          cd DevOps-Project
-          ls -la
-          cd project
           ls -la
           docker-compose down -v || true
           docker-compose up --build -d
@@ -66,7 +60,6 @@ jobs:
       - name: Build Docker Image
         run: |
           ls -la
-          cd DevOps-Project/project
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}
           docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:2.0.$BUILD_NUMBER .
