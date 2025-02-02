@@ -65,7 +65,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          pwd
+          git clone https://github.com/moshelederman/DevOps-Project.git
+          cd DevOps-Project/project
           ls -la
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}
