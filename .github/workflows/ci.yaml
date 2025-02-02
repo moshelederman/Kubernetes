@@ -65,7 +65,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          cd project
+          pwd
           ls -la
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}
