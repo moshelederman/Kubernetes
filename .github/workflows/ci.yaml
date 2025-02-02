@@ -47,6 +47,8 @@ jobs:
 
       - name: Navigate, stop existing containers, and start new ones
         run: |
+          sudo apt-get install -y git
+          git clone https://github.com/moshelederman/DevOps-Project.git
           cd project
           ls -la
           docker-compose down -v || true
