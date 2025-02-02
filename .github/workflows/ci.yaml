@@ -51,6 +51,9 @@ jobs:
           git clone https://github.com/moshelederman/DevOps-Project.git
           ls -la
           cd DevOps-Project
+          ls -la
+          cd project
+          ls -la
           docker-compose down -v || true
           docker-compose up --build -d
 
