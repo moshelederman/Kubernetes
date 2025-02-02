@@ -88,3 +88,4 @@ jobs:
           kubectl apply -f ./mysql.yaml
           kubectl apply -f ./app.yaml
           kubectl apply -f ./secret.yaml
+          kubectl rollout restart deployment app-deployment
