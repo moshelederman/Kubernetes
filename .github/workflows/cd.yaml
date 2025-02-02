@@ -1,12 +1,12 @@
 name: CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
