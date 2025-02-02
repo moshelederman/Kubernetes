@@ -18,6 +18,7 @@ spec:
       containers:
       - name: project-stars
         image: moshelederman/project-stars
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:
